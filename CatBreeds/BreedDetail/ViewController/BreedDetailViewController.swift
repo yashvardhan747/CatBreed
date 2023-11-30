@@ -2,7 +2,7 @@
 //  BreedDetailViewController.swift
 //  CatBreeds
 //
-//  Created by Astrotalk on 29/11/23.
+//  Created by Yash on 29/11/23.
 //
 import UIKit
 
@@ -10,6 +10,7 @@ final class BreedDetailViewController: UIViewController {
 
     @IBOutlet weak var breedImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var reloadImageButton: UIButton!
     
     private let viewModel: BreedDetailViewModel
     
@@ -36,8 +37,25 @@ final class BreedDetailViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: Constants.TableViewCellIdentifier.TitleValueTableViewCell, bundle: nil), forCellReuseIdentifier: Constants.TableViewCellIdentifier.TitleValueTableViewCell)
-        breedImageView.setAndSaveImage(urlString: viewModel.imageUrlString, name: viewModel.id)
+        
+        loadImage()
+        reloadImageButton.addTarget(self, action: #selector(reloadImageButtonTapped), for: .touchUpInside)
     }
+    
+    @objc private func reloadImageButtonTapped() {
+        loadImage()
+    }
+    
+    private func loadImage() {
+        if viewModel.isImageUrlPresent {
+            reloadImageButton.isHidden = true
+            breedImageView.setAndSaveImage(referenceImageId: viewModel.referenceImageId)
+        }else {
+            reloadImageButton.isHidden = false
+        }
+        
+    }
+    
 }
 
 extension BreedDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -49,7 +67,7 @@ extension BreedDetailViewController: UITableViewDelegate, UITableViewDataSource 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableViewCellIdentifier.TitleValueTableViewCell, for: indexPath) as? TitleValueTableViewCell else {return UITableViewCell()}
         
         let rowData = viewModel.getBreedMetaData(at: indexPath.row)
-        cell.configure(Title_ValueTableViewCellViewModel(Title_ValueTableViewCellModel(title: rowData.title, value: rowData.value)))
+        cell.configure(TitleValueTableViewCellViewModel(TitleValueTableViewCellModel(title: rowData.title, value: rowData.value)))
         return cell
     }
 }

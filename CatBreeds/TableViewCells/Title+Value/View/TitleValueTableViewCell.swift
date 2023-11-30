@@ -2,7 +2,7 @@
 //  TitleValueTableViewCell.swift
 //  CatBreeds
 //
-//  Created by Astrotalk on 29/11/23.
+//  Created by Yash on 29/11/23.
 //
 
 import UIKit
@@ -12,7 +12,7 @@ class TitleValueTableViewCell: UITableViewCell {
     @IBOutlet weak var cellTitleLabel: UILabel!
     @IBOutlet weak var cellValueLabel: UILabel!
     
-    private var viewModel: Title_ValueTableViewCellViewModel?
+    private var viewModel: TitleValueTableViewCellViewModel?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,7 +22,7 @@ class TitleValueTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configure(_ viewModel: Title_ValueTableViewCellViewModel) {
+    func configure(_ viewModel: TitleValueTableViewCellViewModel) {
         cellTitleLabel.text = viewModel.dataTitle
         cellValueLabel.text = viewModel.dataValue
     }

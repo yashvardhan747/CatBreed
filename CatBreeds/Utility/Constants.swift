@@ -2,7 +2,7 @@
 //  Constants.swift
 //  CatBreeds
 //
-//  Created by Astrotalk on 29/11/23.
+//  Created by Yash on 29/11/23.
 //
 
 enum Constants {
@@ -25,5 +25,8 @@ enum Constants {
     enum PersistencyManagerFileNames {
         static let Breeds = "Breeds"
     }
+    
+    enum ImageTitle {
+        static let placeholderCat = "placeholderCat"
+    }
 }
-//

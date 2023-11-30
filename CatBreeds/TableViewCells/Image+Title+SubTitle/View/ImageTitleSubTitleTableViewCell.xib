@@ -24,7 +24,7 @@
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Fx6-lS-Mci">
-                        <rect key="frame" x="70" y="8" width="243" height="41.333333333333336"/>
+                        <rect key="frame" x="70" y="14.333333333333332" width="243" height="41.333333333333343"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rrv-th-p4s">
                                 <rect key="frame" x="0.0" y="0.0" width="243" height="22.666666666666668"/>
@@ -47,7 +47,7 @@
                     <constraint firstItem="Fx6-lS-Mci" firstAttribute="leading" secondItem="T4d-YH-0LG" secondAttribute="trailing" constant="10" id="FgF-ug-AhM"/>
                     <constraint firstAttribute="trailing" secondItem="Fx6-lS-Mci" secondAttribute="trailing" constant="10" id="Ujo-fb-skx"/>
                     <constraint firstItem="T4d-YH-0LG" firstAttribute="leading" secondItem="7G2-Ki-BR8" secondAttribute="leading" constant="10" id="ch5-HY-6s2"/>
-                    <constraint firstItem="Fx6-lS-Mci" firstAttribute="centerY" secondItem="T4d-YH-0LG" secondAttribute="centerY" constant="-6.5" id="pG9-Ss-QUX"/>
+                    <constraint firstItem="Fx6-lS-Mci" firstAttribute="centerY" secondItem="T4d-YH-0LG" secondAttribute="centerY" id="pG9-Ss-QUX"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="h6o-Wd-rMb"/>

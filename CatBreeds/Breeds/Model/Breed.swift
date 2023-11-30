@@ -2,16 +2,32 @@
 //  Breed.swift
 //  CatBreeds
 //
-//  Created by Astrotalk on 29/11/23.
+//  Created by Yash on 29/11/23.
 //
 
-typealias BreedData = (title: String, value: String)
-
+struct BreedImage: Codable {
+    let referenceImageId: String
+    let imageUrl: String
+    
+    enum CodingKeys: String, CodingKey {
+        case referenceImageId = "id"
+        case imageUrl = "url"
+    }
+    
+    init(from decoder: Decoder) throws {
+        guard let breedImage = try? decoder.container(keyedBy: CodingKeys.self) else {
+            throw NetworkingError.invalidResponse
+        }
+        
+        referenceImageId = (try? breedImage.decode(String.self, forKey: .referenceImageId)) ?? ""
+        imageUrl = (try? breedImage.decode(String.self, forKey: .imageUrl)) ?? ""
+    }
+}
+    
 struct Breed: Codable {
     let id: String
     let name: String
-    let imageUrl: String
-    let wikipediaUrl: String
+    let referenceImageId: String
     let description: String
     let lifeSpan: String
     let indoor: Int
@@ -25,8 +41,7 @@ struct Breed: Codable {
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case name = "name"
-        case imageUrl = "imageUlmnlwenfrl"
-        case wikipediaUrl = "wikipedia_url"
+        case referenceImageId = "reference_image_id"
         case description = "description"
         case lifeSpan = "life_span"
         case indoor = "indoor"
@@ -46,8 +61,7 @@ struct Breed: Codable {
         
         id = (try? breed.decode(String.self, forKey: .id)) ?? ""
         name = (try? breed.decode(String.self, forKey: .name)) ?? ""
-        imageUrl = (try? breed.decode(String.self, forKey: .imageUrl)) ?? "https://placekitten.com/g/200/300"
-        wikipediaUrl = (try? breed.decode(String.self, forKey: .wikipediaUrl)) ?? ""
+        referenceImageId = (try? breed.decode(String.self, forKey: .referenceImageId)) ?? ""
         description = (try? breed.decode(String.self, forKey: .description)) ?? ""
         lifeSpan = (try? breed.decode(String.self, forKey: .lifeSpan)) ?? "0"
         indoor = (try? breed.decode(Int.self, forKey: .indoor)) ?? 0
@@ -57,22 +71,5 @@ struct Breed: Codable {
         dogFriendly = (try? breed.decode(Int.self, forKey: .dogFriendly)) ?? 0
         energyLevel = (try? breed.decode(Int.self, forKey: .energyLevel)) ?? 0
         intelligence = (try? breed.decode(Int.self, forKey: .intelligence)) ?? 0
-    }
-}
-
-extension Breed {
-    var tableRepresentaion: [BreedData] {
-        var tableContent = [(String, String)]()
-        tableContent.append(("Name", name))
-        tableContent.append(("Description", description))
-        tableContent.append(("Life span", lifeSpan))
-        tableContent.append(("Indoor", String(indoor)))
-        tableContent.append(("Adaptiblity", String(adaptibility)))
-        tableContent.append(("Affection Level", String(affectionLivel)))
-        tableContent.append(("Child Friendly", String(childFriendly)))
-        tableContent.append(("Dog Friendly", String(dogFriendly)))
-        tableContent.append(("Enery Level", String(energyLevel)))
-        tableContent.append(("Intelligence", String(intelligence)))
-        return tableContent
     }
 }

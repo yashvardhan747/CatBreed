@@ -2,7 +2,7 @@
 //  BreedsViewController.swift
 //  CatBreeds
 //
-//  Created by Astrotalk on 29/11/23.
+//  Created by Yash on 29/11/23.
 //
 import UIKit
 
@@ -53,10 +53,13 @@ extension BreedsViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension BreedsViewController: BreedsViewModelDelegate {
+    func reloadImageView(at index: Int) {
+        guard let cell = self.tableView.cellForRow(at: IndexPath(item: index, section: 0)) as? ImageTitleSubTitleTableViewCell else {return}
+        cell.reloadImageView()
+    }
+    
     func reloadTableView() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        self.tableView.reloadData()
     }
     
     func showError(message: String) {

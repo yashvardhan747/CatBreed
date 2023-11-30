@@ -2,29 +2,36 @@
 //  Extensions.swift
 //  CatBreeds
 //
-//  Created by Astrotalk on 29/11/23.
+//  Created by Yash on 29/11/23.
 //
 import UIKit
 
 extension UIImageView {
-    func setAndSaveImage(urlString: String, name: String) {
-        if let data: Data = PersistencyManager.shared.getFromCache(filename: name), let image = UIImage(data: data) {
+    func setAndSaveImage(referenceImageId: String) {
+        if let data: Data = PersistencyManager.shared.getFromCache(filename: referenceImageId), let image = UIImage(data: data) {
             self.image = image
             return
         }
-        
-        DispatchQueue.global(qos: .userInteractive).async {
-            guard let aUrl = URL(string: urlString) else {return}
-            guard let data = try? Data(contentsOf: aUrl),
-                  let image = UIImage(data: data) else {
-                return
-            }
-            PersistencyManager.shared.saveInCache(image.pngData(), filename: name)
+
+        guard let imageUrlString = UserDefaults.standard.string(forKey: referenceImageId) else {
             DispatchQueue.main.async {
-                self.image = image
+                self.image = UIImage(named: Constants.ImageTitle.placeholderCat)
+            }
+            return
+        }
+        DispatchQueue.global(qos: .userInteractive).async {
+            guard let aUrl = URL(string: imageUrlString) else {return}
+            if let data = try? Data(contentsOf: aUrl), let image = UIImage(data: data) {
+                PersistencyManager.shared.saveInCache(image.pngData(), filename: referenceImageId)
+                DispatchQueue.main.async {
+                    self.image = image
+                }
+            }else {
+                DispatchQueue.main.async {
+                    self.image = UIImage(named: Constants.ImageTitle.placeholderCat)
+                }
             }
         }
-        
     }
 }
 

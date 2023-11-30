@@ -2,12 +2,14 @@
 //  BreedsViewModel.swift
 //  CatBreeds
 //
-//  Created by Astrotalk on 29/11/23.
+//  Created by Yash on 29/11/23.
 //
+import Foundation
 
 protocol BreedsViewModelDelegate: AnyObject {
     func reloadTableView()
     func showError(message: String)
+    func reloadImageView(at index: Int)
 }
 
 final class BreedsViewModel {
@@ -25,10 +27,12 @@ final class BreedsViewModel {
         return breeds[index]
     }
     
-    func getCellViewModel(at index: Int) -> Image_Title_SubTitleTableViewCellViewModel? {
+    func getCellViewModel(at index: Int) -> ImageTitleSubTitleTableViewCellViewModel? {
         guard index < breeds.count else {return nil}
         let breed = breeds[index]
-        return Image_Title_SubTitleTableViewCellViewModel(Image_Title_SubTitleTableViewCellModel(imageUrl: breed.imageUrl, title: breed.id, value: breed.name))
+        return ImageTitleSubTitleTableViewCellViewModel(ImageTitleSubTitleTableViewCellModel(title: breed.name,
+                                                                                             value: breed.id,
+                                                                                             referenceImageId: breed.referenceImageId))
     }
     
     func getDetailViewModel(at index: Int) -> BreedDetailViewModel? {
@@ -40,15 +44,37 @@ final class BreedsViewModel {
 
 extension BreedsViewModel {
     func getBreeds() {
-        APIManager.shared.makeAPICall(call: .getBreeds) {[weak self] (result: Result<[Breed]>) in
+            APIManager.shared.makeAPICall(call: .getBreeds) {[weak self] (result: Result<[Breed]>) in
+                switch result {
+                case .success(let breeds):
+                    self?.breeds = breeds
+                    for (i, breed) in breeds.enumerated() {
+                        self?.getImageUrl(of: breed.referenceImageId, index: i)
+                    }
+                    DispatchQueue.main.async {
+                        self?.delegate?.reloadTableView()
+                    }
+                case .failure(let error):
+                    self?.delegate?.showError(message: error.localizedDescription)
+                }
+            }
+    }
+    
+    private func getImageUrl(of referenceImageId: String, index: Int) {
+        if let _ = UserDefaults.standard.string(forKey: referenceImageId){
+            return
+        }
+        
+        APIManager.shared.makeAPICall(call: .getImageUrl(referenceImageId)) {[weak self] (result: Result<BreedImage>) in
             switch result {
-            case .success(let breeds):
-                self?.breeds = breeds
-                self?.delegate?.reloadTableView()
-            case .failure(let error):
-                self?.delegate?.showError(message: error.localizedDescription)
+            case .success(let breedImage):
+                UserDefaults.standard.setValue(breedImage.imageUrl, forKey: breedImage.referenceImageId)
+                DispatchQueue.main.async {
+                    self?.delegate?.reloadImageView(at: index)
+                }
+            case .failure(_):
+                break
             }
         }
-      }
+    }
 }
-

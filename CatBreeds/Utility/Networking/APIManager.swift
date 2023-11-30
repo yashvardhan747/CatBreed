@@ -2,7 +2,7 @@
 //  APIManager.swift
 //  CatBreeds
 //
-//  Created by Astrotalk on 29/11/23.
+//  Created by Yash on 29/11/23.
 //
 import Foundation
 
@@ -12,6 +12,7 @@ final class APIManager {
     
     enum APICall {
         case getBreeds
+        case getImageUrl(String)
         
         private enum BaseURL {
             case dev
@@ -35,7 +36,9 @@ final class APIManager {
         private var getBaseUrl: String {
             switch self {
             case .getBreeds:
-                return BaseURL.dev.getBaseUrl
+                return BaseURL.prod.getBaseUrl
+            case .getImageUrl:
+                return BaseURL.prod.getBaseUrl
             }
         }
         
@@ -43,12 +46,16 @@ final class APIManager {
             switch self {
             case .getBreeds:
                 return "/v1/breeds"
+            case .getImageUrl(let refernceId):
+                return "/v1/images/\(refernceId)"
             }
         }
         
         private var method: HTTPMethod {
             switch self {
             case .getBreeds:
+                return .get
+            case .getImageUrl(_):
                 return .get
             }
         }
@@ -60,6 +67,8 @@ final class APIManager {
             
             switch self {
             case .getBreeds:
+                parameters = [:]
+            case .getImageUrl(_):
                 parameters = [:]
             }
             

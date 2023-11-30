@@ -29,7 +29,7 @@
         <!--Breeds View Controller-->
         <scene sceneID="ylU-Q8-cfz">
             <objects>
-                <viewController storyboardIdentifier="BreedsViewController" id="wkT-ea-fB4" customClass="BreedsViewController" customModule="CatBreed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BreedsViewController" id="wkT-ea-fB4" customClass="BreedsViewController" customModule="CatBreeds" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="txj-lq-MwE">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -76,7 +76,7 @@
         <!--Breed Detail View Controller-->
         <scene sceneID="64c-BR-N0k">
             <objects>
-                <viewController storyboardIdentifier="BreedDetailViewController" id="5on-1l-SbI" customClass="BreedDetailViewController" customModule="CatBreed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BreedDetailViewController" id="5on-1l-SbI" customClass="BreedDetailViewController" customModule="CatBreeds" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="y1O-Ls-Z4v">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -111,6 +111,15 @@
                                 <rect key="frame" x="10" y="289" width="373" height="519"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fci-1s-ypA">
+                                <rect key="frame" x="171.66666666666666" y="154" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="4OS-cu-lWa"/>
+                                    <constraint firstAttribute="height" constant="50" id="M6f-60-kat"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="refreshIcon"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hjf-kC-n04"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -119,6 +128,8 @@
                             <constraint firstItem="hjf-kC-n04" firstAttribute="trailing" secondItem="fww-H1-EHZ" secondAttribute="trailing" constant="10" id="Aal-yR-hhn"/>
                             <constraint firstItem="hjf-kC-n04" firstAttribute="bottom" secondItem="fww-H1-EHZ" secondAttribute="bottom" constant="10" id="Ehf-tA-szW"/>
                             <constraint firstItem="vwr-uh-hHg" firstAttribute="leading" secondItem="hjf-kC-n04" secondAttribute="leading" constant="10" id="MEe-kT-rbP"/>
+                            <constraint firstItem="fci-1s-ypA" firstAttribute="centerY" secondItem="vwr-uh-hHg" secondAttribute="centerY" id="Myu-Fh-9LB"/>
+                            <constraint firstItem="fci-1s-ypA" firstAttribute="centerX" secondItem="vwr-uh-hHg" secondAttribute="centerX" id="TsO-1d-9tk"/>
                             <constraint firstItem="hjf-kC-n04" firstAttribute="trailing" secondItem="vwr-uh-hHg" secondAttribute="trailing" constant="10" id="WEI-X1-v64"/>
                             <constraint firstItem="fww-H1-EHZ" firstAttribute="leading" secondItem="hjf-kC-n04" secondAttribute="leading" constant="10" id="dwk-Wq-7d8"/>
                             <constraint firstItem="vwr-uh-hHg" firstAttribute="top" secondItem="hjf-kC-n04" secondAttribute="top" constant="20" id="pJv-ES-CRg"/>
@@ -126,6 +137,7 @@
                     </view>
                     <connections>
                         <outlet property="breedImageView" destination="vwr-uh-hHg" id="EOW-r8-QxQ"/>
+                        <outlet property="reloadImageButton" destination="fci-1s-ypA" id="LK9-7C-ma5"/>
                         <outlet property="tableView" destination="fww-H1-EHZ" id="C4h-s1-6O6"/>
                         <outlet property="view" destination="y1O-Ls-Z4v" id="OpS-Y4-PsK"/>
                     </connections>
@@ -136,6 +148,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="refreshIcon" width="100" height="100"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

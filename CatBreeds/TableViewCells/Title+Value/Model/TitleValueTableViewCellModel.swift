@@ -2,10 +2,10 @@
 //  Title+ValueTableViewCellModel.swift
 //  CatBreeds
 //
-//  Created by Astrotalk on 29/11/23.
+//  Created by Yash on 29/11/23.
 //
 
-final class Title_ValueTableViewCellModel {
+final class TitleValueTableViewCellModel {
     let title: String
     let value: String
     

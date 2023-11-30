@@ -2,7 +2,7 @@
 //  ImageTitleSubTitleTableViewCell.swift
 //  CatBreeds
 //
-//  Created by Astrotalk on 29/11/23.
+//  Created by Yash on 29/11/23.
 //
 
 import UIKit
@@ -11,6 +11,8 @@ class ImageTitleSubTitleTableViewCell: UITableViewCell {
     @IBOutlet weak var cellImageView: UIImageView!
     @IBOutlet weak var cellTitleLabel: UILabel!
     @IBOutlet weak var cellSubTitleLabel: UILabel!
+    
+    private var viewModel: ImageTitleSubTitleTableViewCellViewModel?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,10 +23,22 @@ class ImageTitleSubTitleTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configure(with viewModel: Image_Title_SubTitleTableViewCellViewModel) {
+    func configure(with viewModel: ImageTitleSubTitleTableViewCellViewModel) {
+        self.viewModel = viewModel
         cellTitleLabel.text = viewModel.getTitle
         cellSubTitleLabel.text = viewModel.getValue
         
-    cellImageView.setAndSaveImage(urlString: viewModel.getImageUrl, name: viewModel.getTitle)
+        cellImageView.setAndSaveImage(referenceImageId: viewModel.getReferenceImageId)
+    }
+    
+    func reloadImageView() {
+        guard let viewModel = viewModel else {return}
+        cellImageView.setAndSaveImage(referenceImageId: viewModel.getReferenceImageId)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cellImageView.image = nil
     }
 }
+
