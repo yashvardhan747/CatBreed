@@ -6,56 +6,55 @@
 //
 import Foundation
 
-typealias BreedData = (title: String, value: String)
+protocol BreedDetailViewModelDelegate: AnyObject {
+    func reloadImageView()
+}
 
 final class BreedDetailViewModel {
-    private let breed: Breed
-    private let tableRepresentaion: [BreedData]
+    private var breedDetailModel: BreedDetailModel
+    let index: Int
     
-    init(_ model: Breed) {
-        self.breed = model
-        
-        var tableContent = [(String, String)]()
-        tableContent.append(("Name", breed.name))
-        tableContent.append(("Description", breed.description))
-        tableContent.append(("Life span", breed.lifeSpan))
-        tableContent.append(("Indoor", String(breed.indoor)))
-        tableContent.append(("Adaptiblity", String(breed.adaptibility)))
-        tableContent.append(("Affection Level", String(breed.affectionLivel)))
-        tableContent.append(("Child Friendly", String(breed.childFriendly)))
-        tableContent.append(("Dog Friendly", String(breed.dogFriendly)))
-        tableContent.append(("Enery Level", String(breed.energyLevel)))
-        tableContent.append(("Intelligence", String(breed.intelligence)))
-        
-        tableRepresentaion = tableContent
-    }
+    weak var delegate: BreedDetailViewModelDelegate?
     
-    var referenceImageId: String {
-        return breed.referenceImageId
+    init(index: Int, _ model: BreedDetailModel) {
+        self.index = index
+        self.breedDetailModel = model
     }
     
     var name: String {
-        breed.name
-    }
-    
-    var id: String {
-        breed.id
-    }
-    
-    var isImageUrlPresent: Bool {
-        if let _ = UserDefaults.standard.string(forKey: breed.referenceImageId) {
-            return true
-        }
-        return false
+        breedDetailModel.breed.name
     }
     
     var tableRepresentaionCount: Int {
-        tableRepresentaion.count
+        breedDetailModel.tableRepresentation.count
     }
     
-    func getBreedMetaData(at index: Int) -> BreedData {
-        tableRepresentaion[index]
+    var imageURLFetchingStatus: FetchingStatus<BreedImage> {
+        breedDetailModel.breed.breedImageFetchingStatus
+    }
+    
+    func getBreedMetaData(at index: Int) -> BreedMetaData {
+        breedDetailModel.tableRepresentation[index]
+    }
+    
+    func fetchImageUrl() {
+        guard let refId = breedDetailModel.breed.referenceImageId else {return}
+        BreedImageUrlFetcher.shared.getImageUrl(index: index, referenceImageId: refId)
     }
     
 }
 
+
+extension BreedDetailViewModel: BreedImageUrlFetcherDelegate {
+    func success(index: Int, _ breedImage: BreedImage) {
+        guard self.index == index else {return}
+        
+        breedDetailModel.breed.breedImageFetchingStatus = .fetched(breedImage)
+        delegate?.reloadImageView()
+    }
+    
+    func failure(index: Int, _ error: Error) {
+        
+    }
+    
+}

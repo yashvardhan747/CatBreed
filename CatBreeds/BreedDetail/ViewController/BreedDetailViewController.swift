@@ -11,12 +11,14 @@ final class BreedDetailViewController: UIViewController {
     @IBOutlet weak var breedImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var reloadImageButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private let viewModel: BreedDetailViewModel
     
     init?(coder: NSCoder, viewModel: BreedDetailViewModel) {
         self.viewModel = viewModel
         super.init(coder: coder)
+        viewModel.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -43,21 +45,46 @@ final class BreedDetailViewController: UIViewController {
     }
     
     @objc private func reloadImageButtonTapped() {
-        loadImage()
+        viewModel.fetchImageUrl()
     }
     
     private func loadImage() {
-        if viewModel.isImageUrlPresent {
-            reloadImageButton.isHidden = true
-            breedImageView.setAndSaveImage(referenceImageId: viewModel.referenceImageId)
-        }else {
+        switch viewModel.imageURLFetchingStatus {
+        case .failed:
+            activityIndicator.stopAnimating()
             reloadImageButton.isHidden = false
+        case .fetching:
+            activityIndicator.startAnimating()
+            reloadImageButton.isHidden = true
+        case .notStarted:
+            activityIndicator.startAnimating()
+            reloadImageButton.isHidden = true
+        case .fetched(let breedImage):
+            breedImageView.setAndSaveImage(imageUrlString: breedImage.urlString, imageName: viewModel.name) {[weak self]bool in
+                switch bool {
+                case true:
+                    self?.activityIndicator.stopAnimating()
+                    self?.reloadImageButton.isHidden = true
+                case false:
+                    self?.activityIndicator.stopAnimating()
+                    self?.reloadImageButton.isHidden = false
+                }
+            }
         }
-        
+    }
+    
+    deinit {
+        BreedImageUrlFetcher.shared.delegates = BreedImageUrlFetcher.shared.delegates.filter { delegate in
+            guard let viewModel = delegate as? BreedDetailViewModel, viewModel.index == self.viewModel.index else {
+                return true
+            }
+            return false
+        }
     }
     
 }
 
+//MARK: - TableView Delegate and DataSource
 extension BreedDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.tableRepresentaionCount
@@ -72,4 +99,9 @@ extension BreedDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
 }
 
-
+//MARK: - BreedDetailViewModelDelegate
+extension BreedDetailViewController: BreedDetailViewModelDelegate {
+    func reloadImageView() {
+        loadImage()
+    }
+}

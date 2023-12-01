@@ -5,13 +5,14 @@
 //  Created by Yash on 29/11/23.
 //
 
-struct BreedImage: Codable {
-    let referenceImageId: String
-    let imageUrl: String
+
+struct BreedImage: Fetchable, Codable {
+    let referenceImageId: String?
+    let urlString: String?
     
     enum CodingKeys: String, CodingKey {
         case referenceImageId = "id"
-        case imageUrl = "url"
+        case urlString = "url"
     }
     
     init(from decoder: Decoder) throws {
@@ -19,24 +20,25 @@ struct BreedImage: Codable {
             throw NetworkingError.invalidResponse
         }
         
-        referenceImageId = (try? breedImage.decode(String.self, forKey: .referenceImageId)) ?? ""
-        imageUrl = (try? breedImage.decode(String.self, forKey: .imageUrl)) ?? ""
+        referenceImageId = try? breedImage.decode(String.self, forKey: .referenceImageId)
+        urlString = try? breedImage.decode(String.self, forKey: .urlString)
     }
 }
-    
+
 struct Breed: Codable {
     let id: String
     let name: String
-    let referenceImageId: String
-    let description: String
-    let lifeSpan: String
-    let indoor: Int
-    let adaptibility: Int
-    let affectionLivel: Int
-    let childFriendly: Int
-    let dogFriendly: Int
-    let energyLevel: Int
-    let intelligence: Int
+    let referenceImageId: String?
+    let description: String?
+    let lifeSpan: String?
+    let indoor: Int?
+    let adaptibility: Int?
+    let affectionLivel: Int?
+    let childFriendly: Int?
+    let dogFriendly: Int?
+    let energyLevel: Int?
+    let intelligence: Int?
+    var breedImageFetchingStatus: FetchingStatus<BreedImage>
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -51,7 +53,6 @@ struct Breed: Codable {
         case dogFriendly = "dog_friendly"
         case energyLevel = "energy_level"
         case intelligence = "intelligence"
-    
     }
     
     init(from decoder: Decoder) throws {
@@ -59,17 +60,23 @@ struct Breed: Codable {
             throw NetworkingError.invalidResponse
         }
         
-        id = (try? breed.decode(String.self, forKey: .id)) ?? ""
-        name = (try? breed.decode(String.self, forKey: .name)) ?? ""
-        referenceImageId = (try? breed.decode(String.self, forKey: .referenceImageId)) ?? ""
-        description = (try? breed.decode(String.self, forKey: .description)) ?? ""
-        lifeSpan = (try? breed.decode(String.self, forKey: .lifeSpan)) ?? "0"
-        indoor = (try? breed.decode(Int.self, forKey: .indoor)) ?? 0
-        adaptibility = (try? breed.decode(Int.self, forKey: .adaptibility)) ?? 0
-        affectionLivel = (try? breed.decode(Int.self, forKey: .affectionLivel)) ?? 0
-        childFriendly = (try? breed.decode(Int.self, forKey: .childFriendly)) ?? 0
-        dogFriendly = (try? breed.decode(Int.self, forKey: .dogFriendly)) ?? 0
-        energyLevel = (try? breed.decode(Int.self, forKey: .energyLevel)) ?? 0
-        intelligence = (try? breed.decode(Int.self, forKey: .intelligence)) ?? 0
+        id = (try? breed.decode(String.self, forKey: .id)) ?? "--"
+        name = (try? breed.decode(String.self, forKey: .name)) ?? "--"
+        referenceImageId = try? breed.decode(String.self, forKey: .referenceImageId)
+        description = try? breed.decode(String.self, forKey: .description)
+        lifeSpan = try? breed.decode(String.self, forKey: .lifeSpan)
+        indoor = try? breed.decode(Int.self, forKey: .indoor)
+        adaptibility = try? breed.decode(Int.self, forKey: .adaptibility)
+        affectionLivel = try? breed.decode(Int.self, forKey: .affectionLivel)
+        childFriendly = try? breed.decode(Int.self, forKey: .childFriendly)
+        dogFriendly = try? breed.decode(Int.self, forKey: .dogFriendly)
+        energyLevel = try? breed.decode(Int.self, forKey: .energyLevel)
+        intelligence = try? breed.decode(Int.self, forKey: .intelligence)
+        
+        if let _ = referenceImageId {
+            breedImageFetchingStatus = .notStarted
+        }else {
+            breedImageFetchingStatus = .failed
+        }
     }
 }

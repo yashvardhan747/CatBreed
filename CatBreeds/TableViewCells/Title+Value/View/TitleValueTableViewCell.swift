@@ -26,6 +26,4 @@ class TitleValueTableViewCell: UITableViewCell {
         cellTitleLabel.text = viewModel.dataTitle
         cellValueLabel.text = viewModel.dataValue
     }
-    
-    
 }

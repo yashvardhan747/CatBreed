@@ -6,17 +6,17 @@
 //
 import Foundation
 
-final class ImageTitleSubTitleTableViewCellViewModel {
+struct ImageTitleSubTitleTableViewCellViewModel {
     private let model: ImageTitleSubTitleTableViewCellModel
+    let index: Int
     
-    private var imageUrlString: String?
-    
-    init(_ model: ImageTitleSubTitleTableViewCellModel) {
+    init(index: Int, model: ImageTitleSubTitleTableViewCellModel) {
+        self.index = index
         self.model = model
     }
     
-    var getReferenceImageId: String {
-        model.referenceImageId
+    var imageFetchingStatus: FetchingStatus<ImageUrlFetchable> {
+        model.imageFetchingStatus
     }
     
     var getTitle: String {

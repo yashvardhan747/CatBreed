@@ -7,28 +7,31 @@
 import UIKit
 
 extension UIImageView {
-    func setAndSaveImage(referenceImageId: String) {
-        if let data: Data = PersistencyManager.shared.getFromCache(filename: referenceImageId), let image = UIImage(data: data) {
+    
+    func setAndSaveImage(imageUrlString: String?, imageName: String, handler: @escaping (Bool) -> Void){
+        if let data: Data = PersistencyManager.shared.getFromCache(filename: imageName), let image = UIImage(data: data) {
             self.image = image
+            handler(true)
             return
         }
 
-        guard let imageUrlString = UserDefaults.standard.string(forKey: referenceImageId) else {
-            DispatchQueue.main.async {
-                self.image = UIImage(named: Constants.ImageTitle.placeholderCat)
-            }
+        guard let imageUrlString = imageUrlString else {
+//        guard let imageUrlString = UserDefaults.standard.string(forKey: referenceImageId) else {
+            handler(false)
             return
         }
-        DispatchQueue.global(qos: .userInteractive).async {
+        
+        DispatchQueue.global(qos: .userInteractive).async {[weak self] in
             guard let aUrl = URL(string: imageUrlString) else {return}
             if let data = try? Data(contentsOf: aUrl), let image = UIImage(data: data) {
-                PersistencyManager.shared.saveInCache(image.pngData(), filename: referenceImageId)
+                PersistencyManager.shared.saveInCache(image.pngData(), filename: imageName)
                 DispatchQueue.main.async {
-                    self.image = image
+                    self?.image = image
+                    handler(true)
                 }
             }else {
                 DispatchQueue.main.async {
-                    self.image = UIImage(named: Constants.ImageTitle.placeholderCat)
+                    handler(false)
                 }
             }
         }

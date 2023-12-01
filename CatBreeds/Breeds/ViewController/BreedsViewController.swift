@@ -15,19 +15,36 @@ class BreedsViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.delegate = self
-        
         setupUI()
+        viewModel.getBreeds()
     }
     
     private func setupUI() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: Constants.TableViewCellIdentifier.ImageTitleSubTitleTableViewCell, bundle: nil), forCellReuseIdentifier: Constants.TableViewCellIdentifier.ImageTitleSubTitleTableViewCell)
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(callPullToRefersh), for: .valueChanged)
+    }
+    
+    @objc private func callPullToRefersh() {
+        reloadTableViewData()
+    }
+    
+    private func reloadTableViewData() {
         viewModel.getBreeds()
     }
     
+    deinit {
+        BreedImageUrlFetcher.shared.delegates = BreedImageUrlFetcher.shared.delegates.filter { delegate in
+            guard delegate is BreedsViewModel else {
+                return true
+            }
+            return false
+        }
+    }
 }
-
+// MARK: - TableView Delegate and DataSource
 extension BreedsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.breedCount
@@ -37,6 +54,7 @@ extension BreedsViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableViewCellIdentifier.ImageTitleSubTitleTableViewCell, for: indexPath) as? ImageTitleSubTitleTableViewCell else {return UITableViewCell()}
         
         guard let cellViewModel = viewModel.getCellViewModel(at: indexPath.row) else {return cell}
+        cell.delegate = self
         cell.configure(with: cellViewModel)
         
         return cell
@@ -52,13 +70,14 @@ extension BreedsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+//MARK: - BreedsViewModelDelegate
 extension BreedsViewController: BreedsViewModelDelegate {
-    func reloadImageView(at index: Int) {
-        guard let cell = self.tableView.cellForRow(at: IndexPath(item: index, section: 0)) as? ImageTitleSubTitleTableViewCell else {return}
-        cell.reloadImageView()
+    func reloadTableView(at index: Int) {
+        self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
     }
     
     func reloadTableView() {
+        self.tableView.refreshControl?.endRefreshing()
         self.tableView.reloadData()
     }
     
@@ -70,4 +89,9 @@ extension BreedsViewController: BreedsViewModelDelegate {
     }
 }
 
+extension BreedsViewController: ImageTitleSubTitleTableViewCellDelegate {
+    func reloadImageView(for index: Int) {
+        viewModel.getImageUrl(index: index)
+    }
+}
 

@@ -113,13 +113,26 @@
                             </tableView>
                             <button hidden="YES" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fci-1s-ypA">
                                 <rect key="frame" x="171.66666666666666" y="154" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="0.20528042218543047" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="4OS-cu-lWa"/>
                                     <constraint firstAttribute="height" constant="50" id="M6f-60-kat"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="refreshIcon"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="MC5-3V-FZr">
+                                <rect key="frame" x="171.66666666666666" y="154" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="VdK-2g-btl"/>
+                                    <constraint firstAttribute="height" constant="50" id="inL-dR-XXL"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hjf-kC-n04"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -129,13 +142,16 @@
                             <constraint firstItem="hjf-kC-n04" firstAttribute="bottom" secondItem="fww-H1-EHZ" secondAttribute="bottom" constant="10" id="Ehf-tA-szW"/>
                             <constraint firstItem="vwr-uh-hHg" firstAttribute="leading" secondItem="hjf-kC-n04" secondAttribute="leading" constant="10" id="MEe-kT-rbP"/>
                             <constraint firstItem="fci-1s-ypA" firstAttribute="centerY" secondItem="vwr-uh-hHg" secondAttribute="centerY" id="Myu-Fh-9LB"/>
+                            <constraint firstItem="MC5-3V-FZr" firstAttribute="centerX" secondItem="vwr-uh-hHg" secondAttribute="centerX" id="NfL-lR-mwF"/>
                             <constraint firstItem="fci-1s-ypA" firstAttribute="centerX" secondItem="vwr-uh-hHg" secondAttribute="centerX" id="TsO-1d-9tk"/>
                             <constraint firstItem="hjf-kC-n04" firstAttribute="trailing" secondItem="vwr-uh-hHg" secondAttribute="trailing" constant="10" id="WEI-X1-v64"/>
                             <constraint firstItem="fww-H1-EHZ" firstAttribute="leading" secondItem="hjf-kC-n04" secondAttribute="leading" constant="10" id="dwk-Wq-7d8"/>
                             <constraint firstItem="vwr-uh-hHg" firstAttribute="top" secondItem="hjf-kC-n04" secondAttribute="top" constant="20" id="pJv-ES-CRg"/>
+                            <constraint firstItem="MC5-3V-FZr" firstAttribute="centerY" secondItem="vwr-uh-hHg" secondAttribute="centerY" id="xQq-hF-cK5"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="MC5-3V-FZr" id="it3-kr-jhi"/>
                         <outlet property="breedImageView" destination="vwr-uh-hHg" id="EOW-r8-QxQ"/>
                         <outlet property="reloadImageButton" destination="fci-1s-ypA" id="LK9-7C-ma5"/>
                         <outlet property="tableView" destination="fww-H1-EHZ" id="C4h-s1-6O6"/>
@@ -148,7 +164,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="refreshIcon" width="100" height="100"/>
+        <image name="refreshIcon" width="50" height="50"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

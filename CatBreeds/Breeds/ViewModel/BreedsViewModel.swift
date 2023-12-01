@@ -9,7 +9,7 @@ import Foundation
 protocol BreedsViewModelDelegate: AnyObject {
     func reloadTableView()
     func showError(message: String)
-    func reloadImageView(at index: Int)
+    func reloadTableView(at index: Int)
 }
 
 final class BreedsViewModel {
@@ -17,6 +17,10 @@ final class BreedsViewModel {
     
     private var breeds: [Breed] = []
 //    MARK: - Public
+    
+    init() {
+        BreedImageUrlFetcher.shared.delegates.append(self)
+    }
     
     var breedCount: Int {
         return breeds.count
@@ -30,15 +34,32 @@ final class BreedsViewModel {
     func getCellViewModel(at index: Int) -> ImageTitleSubTitleTableViewCellViewModel? {
         guard index < breeds.count else {return nil}
         let breed = breeds[index]
-        return ImageTitleSubTitleTableViewCellViewModel(ImageTitleSubTitleTableViewCellModel(title: breed.name,
-                                                                                             value: breed.id,
-                                                                                             referenceImageId: breed.referenceImageId))
+    
+        var taskProgressStatus: FetchingStatus<ImageUrlFetchable>
+        
+        switch breed.breedImageFetchingStatus {
+        case .notStarted:
+            getImageUrl(index: index)
+            taskProgressStatus = .notStarted
+        case .fetched(let breedImage):
+            taskProgressStatus = .fetched(ImageUrlFetchable(urlString: breedImage.urlString))
+        case .failed:
+            taskProgressStatus = .failed
+        case .fetching:
+            taskProgressStatus = .fetching
+        }
+        
+        return ImageTitleSubTitleTableViewCellViewModel(index: index,
+                                                        model: ImageTitleSubTitleTableViewCellModel(
+                                                        title: breed.name,
+                                                        value: breed.id,
+                                                        imageFetchingStatus: taskProgressStatus))
     }
     
     func getDetailViewModel(at index: Int) -> BreedDetailViewModel? {
         guard index < breeds.count else {return nil}
         let breed = breeds[index]
-        return BreedDetailViewModel(breed)
+        return BreedDetailViewModel(index: index, BreedDetailModel(breed))
     }
 }
 
@@ -48,33 +69,31 @@ extension BreedsViewModel {
                 switch result {
                 case .success(let breeds):
                     self?.breeds = breeds
-                    for (i, breed) in breeds.enumerated() {
-                        self?.getImageUrl(of: breed.referenceImageId, index: i)
-                    }
-                    DispatchQueue.main.async {
-                        self?.delegate?.reloadTableView()
-                    }
+                    print(breeds)
+                    self?.delegate?.reloadTableView()
                 case .failure(let error):
                     self?.delegate?.showError(message: error.localizedDescription)
                 }
             }
     }
     
-    private func getImageUrl(of referenceImageId: String, index: Int) {
-        if let _ = UserDefaults.standard.string(forKey: referenceImageId){
-            return
-        }
-        
-        APIManager.shared.makeAPICall(call: .getImageUrl(referenceImageId)) {[weak self] (result: Result<BreedImage>) in
-            switch result {
-            case .success(let breedImage):
-                UserDefaults.standard.setValue(breedImage.imageUrl, forKey: breedImage.referenceImageId)
-                DispatchQueue.main.async {
-                    self?.delegate?.reloadImageView(at: index)
-                }
-            case .failure(_):
-                break
-            }
-        }
+    func getImageUrl(index: Int) {
+        guard let breed = getBreedModel(at: index), let referenceImageId = breed.referenceImageId else {return}
+    
+        breeds[index].breedImageFetchingStatus = .fetching
+        BreedImageUrlFetcher.shared.getImageUrl(index: index, referenceImageId: referenceImageId)
     }
+}
+
+extension BreedsViewModel: BreedImageUrlFetcherDelegate {
+    
+    func success(index: Int, _ breedImage: BreedImage) {
+        breeds[index].breedImageFetchingStatus = .fetched(breedImage)
+        delegate?.reloadTableView(at: index)
+    }
+    
+    func failure(index: Int, _ error: Error) {
+        
+    }
+    
 }
