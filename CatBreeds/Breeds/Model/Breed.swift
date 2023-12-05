@@ -29,7 +29,7 @@ struct Breed: Decodable {
     let dogFriendly: Int?
     let energyLevel: Int?
     let intelligence: Int?
-    var breedImageFetchingStatus: FetchingStatus<BreedImage>
+    var breedImageURLFetchingStatus: FetchingStatus<BreedImage>
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -62,6 +62,6 @@ struct Breed: Decodable {
         energyLevel = try? breed.decode(Int.self, forKey: .energyLevel)
         intelligence = try? breed.decode(Int.self, forKey: .intelligence)
         
-        breedImageFetchingStatus = .notStarted
+        breedImageURLFetchingStatus = .notStarted
     }
 }

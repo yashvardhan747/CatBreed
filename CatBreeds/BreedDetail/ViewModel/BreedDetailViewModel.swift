@@ -30,7 +30,7 @@ final class BreedDetailViewModel {
     }
     
     var imageURLFetchingStatus: FetchingStatus<BreedImage> {
-        breedDetailModel.breed.breedImageFetchingStatus
+        breedDetailModel.breed.breedImageURLFetchingStatus
     }
     
     func getBreedMetaData(at index: Int) -> BreedMetaData {
@@ -49,12 +49,12 @@ extension BreedDetailViewModel: BreedImageUrlFetcherDelegate {
     func success(index: Int, _ breedImage: BreedImage) {
         guard self.index == index else {return}
         
-        breedDetailModel.breed.breedImageFetchingStatus = .fetched(breedImage)
+        breedDetailModel.breed.breedImageURLFetchingStatus = .fetched(breedImage)
         delegate?.reloadImageView()
     }
     
     func failure(index: Int, _ error: Error) {
-        breedDetailModel.breed.breedImageFetchingStatus = .failed
+        breedDetailModel.breed.breedImageURLFetchingStatus = .failed
         delegate?.reloadImageView()
     }
     

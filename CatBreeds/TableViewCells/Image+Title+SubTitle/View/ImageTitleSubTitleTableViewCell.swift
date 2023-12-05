@@ -31,6 +31,13 @@ final class ImageTitleSubTitleTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cellImageView.image = nil
+        self.reloadImageViewButton.isHidden = true
+        showSpinner()
+    }
+    
     private func hideSpinner() {
         self.activityIndicator.stopAnimating()
         self.activityIndicator.isHidden = true
@@ -39,13 +46,6 @@ final class ImageTitleSubTitleTableViewCell: UITableViewCell {
     private func showSpinner() {
         self.activityIndicator.startAnimating()
         self.activityIndicator.isHidden = false
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        cellImageView.image = nil
-        self.reloadImageViewButton.isHidden = true
-        showSpinner()
     }
     
     func configure(with viewModel: ImageTitleSubTitleTableViewCellViewModel) {

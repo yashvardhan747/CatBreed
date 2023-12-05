@@ -48,26 +48,33 @@ final class BreedDetailViewController: UIViewController {
         viewModel.fetchImageUrl()
     }
     
+    private func hideSpinner() {
+        self.activityIndicator.stopAnimating()
+        self.activityIndicator.isHidden = true
+    }
+    
+    private func showSpinner() {
+        self.activityIndicator.startAnimating()
+        self.activityIndicator.isHidden = false
+    }
+    
     private func loadImage() {
         switch viewModel.imageURLFetchingStatus {
         case .failed:
-            activityIndicator.stopAnimating()
             reloadImageButton.isHidden = false
-        case .fetching:
-            activityIndicator.startAnimating()
+            hideSpinner()
+        case .fetching, .notStarted:
             reloadImageButton.isHidden = true
-        case .notStarted:
-            activityIndicator.startAnimating()
-            reloadImageButton.isHidden = true
+            showSpinner()
         case .fetched(let breedImage):
-            breedImageView.setAndSaveImage(imageUrlString: breedImage.urlString, imageName: viewModel.name) {[weak self]bool in
+            breedImageView.setAndSaveImage(imageUrlString: breedImage.urlString, imageName: viewModel.name) {[weak self] bool in
                 switch bool {
                 case true:
-                    self?.activityIndicator.stopAnimating()
                     self?.reloadImageButton.isHidden = true
+                    self?.hideSpinner()
                 case false:
-                    self?.activityIndicator.stopAnimating()
                     self?.reloadImageButton.isHidden = false
+                    self?.hideSpinner()
                 }
             }
         }

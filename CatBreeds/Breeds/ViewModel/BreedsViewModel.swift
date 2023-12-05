@@ -36,7 +36,7 @@ final class BreedsViewModel {
     
         var taskProgressStatus: FetchingStatus<ImageUrlFetchable>
         
-        switch breed.breedImageFetchingStatus {
+        switch breed.breedImageURLFetchingStatus {
         case .notStarted:
             fetchImageUrl(index: index)
             taskProgressStatus = .notStarted
@@ -65,7 +65,7 @@ final class BreedsViewModel {
     
     func reloadImageUrl(for index: Int) {
         if var breed = getBreedModel(at: index) {
-            breed.breedImageFetchingStatus = .notStarted
+            breed.breedImageURLFetchingStatus = .notStarted
             breeds[index] = breed
             delegate?.reloadTableView(at: index)
         }
@@ -97,7 +97,7 @@ extension BreedsViewModel {
     private func fetchImageUrl(index: Int) {
         guard let breed = getBreedModel(at: index) else {return}
         let referenceImageId = breed.referenceImageId
-        breeds[index].breedImageFetchingStatus = .fetching
+        breeds[index].breedImageURLFetchingStatus = .fetching
         BreedImageUrlFetcher.shared.getImageUrl(index: index, referenceImageId: referenceImageId)
     }
 }
@@ -106,7 +106,7 @@ extension BreedsViewModel {
 extension BreedsViewModel: BreedImageUrlFetcherDelegate {
     func success(index: Int, _ breedImage: BreedImage) {
         if var breed = getBreedModel(at: index) {
-            breed.breedImageFetchingStatus = .fetched(breedImage)
+            breed.breedImageURLFetchingStatus = .fetched(breedImage)
             breeds[index] = breed
             delegate?.reloadTableView(at: index)
         }
@@ -114,7 +114,7 @@ extension BreedsViewModel: BreedImageUrlFetcherDelegate {
     
     func failure(index: Int, _ error: Error) {
         if var breed = getBreedModel(at: index) {
-            breed.breedImageFetchingStatus = .failed
+            breed.breedImageURLFetchingStatus = .failed
             breeds[index] = breed
             delegate?.reloadTableView(at: index)
         }
