@@ -12,12 +12,12 @@ struct ImageUrlFetchable: Fetchable {
 struct ImageTitleSubTitleTableViewCellModel {
     let title: String
     let value: String
-    let imageFetchingStatus: FetchingStatus<ImageUrlFetchable>
+    let imageURLFetchingStatus: FetchingStatus<ImageUrlFetchable>
     
-    init(title: String, value: String, imageFetchingStatus: FetchingStatus<ImageUrlFetchable>) {
+    init(title: String, value: String, imageURLFetchingStatus: FetchingStatus<ImageUrlFetchable>) {
         self.title = title
         self.value = value
-        self.imageFetchingStatus = imageFetchingStatus
+        self.imageURLFetchingStatus = imageURLFetchingStatus
     }
 }
 

@@ -57,17 +57,17 @@ enum APICall {
         }
     }
     
-    fileprivate func asURLRequest() -> URLRequest? {
-        var urlString = getBaseUrl + path
-        
-        var parameters = [String : String]()
-        
+    private var parameters: [String : String] {
         switch self {
         case .getBreeds:
-            parameters = [:]
+            return [:]
         case .getImageUrl(_):
-            parameters = [:]
+            return [:]
         }
+    }
+    
+    fileprivate func asURLRequest() -> URLRequest? {
+        var urlString = getBaseUrl + path
         
         if parameters.isEmpty == false {
             urlString += "/?"

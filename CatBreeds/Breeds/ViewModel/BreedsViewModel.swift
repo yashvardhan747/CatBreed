@@ -52,7 +52,7 @@ final class BreedsViewModel {
                                                         model: ImageTitleSubTitleTableViewCellModel(
                                                         title: breed.name,
                                                         value: breed.id,
-                                                        imageFetchingStatus: taskProgressStatus))
+                                                        imageURLFetchingStatus: taskProgressStatus))
     }
     
     func getDetailViewModel(at index: Int) -> BreedDetailViewModel? {
@@ -94,7 +94,7 @@ extension BreedsViewModel {
             }
     }
     
-    func fetchImageUrl(index: Int) {
+    private func fetchImageUrl(index: Int) {
         guard let breed = getBreedModel(at: index) else {return}
         let referenceImageId = breed.referenceImageId
         breeds[index].breedImageFetchingStatus = .fetching

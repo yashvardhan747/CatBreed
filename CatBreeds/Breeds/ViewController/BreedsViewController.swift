@@ -16,7 +16,7 @@ class BreedsViewController: UIViewController{
         super.viewDidLoad()
         viewModel.delegate = self
         setupUI()
-        viewModel.fetchBreeds()
+        reloadTableViewData()
     }
     
     private func setupUI() {

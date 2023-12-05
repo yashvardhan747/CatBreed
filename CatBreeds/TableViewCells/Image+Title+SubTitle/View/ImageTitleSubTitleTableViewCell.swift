@@ -59,7 +59,7 @@ final class ImageTitleSubTitleTableViewCell: UITableViewCell {
     private func loadImageView(){
         guard let viewModel = viewModel else {return}
         
-        switch viewModel.imageFetchingStatus {
+        switch viewModel.imageURLFetchingStatus {
         case .failed:
             self.reloadImageViewButton.isHidden = false
             hideSpinner()

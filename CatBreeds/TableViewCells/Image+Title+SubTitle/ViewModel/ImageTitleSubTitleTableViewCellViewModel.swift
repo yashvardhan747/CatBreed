@@ -4,7 +4,6 @@
 //
 //  Created by Yash on 29/11/23.
 //
-import Foundation
 
 struct ImageTitleSubTitleTableViewCellViewModel {
     private let model: ImageTitleSubTitleTableViewCellModel
@@ -15,8 +14,8 @@ struct ImageTitleSubTitleTableViewCellViewModel {
         self.model = model
     }
     
-    var imageFetchingStatus: FetchingStatus<ImageUrlFetchable> {
-        model.imageFetchingStatus
+    var imageURLFetchingStatus: FetchingStatus<ImageUrlFetchable> {
+        model.imageURLFetchingStatus
     }
     
     var getTitle: String {

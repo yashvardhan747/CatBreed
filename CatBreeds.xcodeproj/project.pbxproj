@@ -205,6 +205,7 @@
 		1213B1C02B1713AB004BD5AB /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				126E1D252B19A54E0040C835 /* FetchingStatus.swift */,
 				126E1D1F2B196AA50040C835 /* BreedImageUrlFetcher.swift */,
 				1213B1C12B1713BE004BD5AB /* Constants.swift */,
 				1213B1C32B1713D0004BD5AB /* Extensions.swift */,
@@ -219,7 +220,6 @@
 			children = (
 				1213B1C62B1713FC004BD5AB /* APIManager.swift */,
 				1213B1C82B17140E004BD5AB /* NetworkError.swift */,
-				126E1D252B19A54E0040C835 /* FetchingStatus.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
