@@ -5,7 +5,7 @@
 //  Created by Yash on 29/11/23.
 //
 
-final class TitleValueTableViewCellModel {
+struct TitleValueTableViewCellModel {
     let title: String
     let value: String
     

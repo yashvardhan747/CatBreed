@@ -2,7 +2,7 @@
 //  BreedImageFetcher.swift
 //  CatBreeds
 //
-//  Created by Astrotalk on 01/12/23.
+//  Created by Yash on 01/12/23.
 //
 import Foundation
 
@@ -11,11 +11,7 @@ protocol BreedImageUrlFetcherDelegate: AnyObject {
     func failure(index: Int, _ error: Error)
 }
 
-class BreedImageUrlFetchDelegates {
-    weak var delegates: BreedImageUrlFetcherDelegate?
-}
-
-class BreedImageUrlFetcher {
+final class BreedImageUrlFetcher {
     static let shared = BreedImageUrlFetcher()
     private init() {}
     
@@ -23,7 +19,7 @@ class BreedImageUrlFetcher {
     
     func getImageUrl(index: Int, referenceImageId: String) {
         
-        APIManager.shared.makeAPICall(call: .getImageUrl(referenceImageId)) {[weak self] (result: Result<BreedImage>) in
+        APIManager.shared.makeAPICall(call: .getImageUrl(referenceImageId)) {[weak self] (result: Result<BreedImage, NetworkError>) in
             switch result {
             case .success(let breedImage):
                 self?.delegates.forEach{$0.success(index: index, breedImage)}

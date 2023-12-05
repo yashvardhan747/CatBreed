@@ -6,7 +6,7 @@
 //
 import Foundation
 
-protocol BreedsViewModelDelegate: AnyObject {
+protocol BreedsViewModelDelegate: AnyObject{
     func reloadTableView()
     func showError(message: String)
     func reloadTableView(at index: Int)
@@ -32,14 +32,13 @@ final class BreedsViewModel {
     }
     
     func getCellViewModel(at index: Int) -> ImageTitleSubTitleTableViewCellViewModel? {
-        guard index < breeds.count else {return nil}
-        let breed = breeds[index]
+        guard let breed = getBreedModel(at: index) else {return nil}
     
         var taskProgressStatus: FetchingStatus<ImageUrlFetchable>
         
         switch breed.breedImageFetchingStatus {
         case .notStarted:
-            getImageUrl(index: index)
+            fetchImageUrl(index: index)
             taskProgressStatus = .notStarted
         case .fetched(let breedImage):
             taskProgressStatus = .fetched(ImageUrlFetchable(urlString: breedImage.urlString))
@@ -59,41 +58,65 @@ final class BreedsViewModel {
     func getDetailViewModel(at index: Int) -> BreedDetailViewModel? {
         guard index < breeds.count else {return nil}
         let breed = breeds[index]
-        return BreedDetailViewModel(index: index, BreedDetailModel(breed))
+        let vm = BreedDetailViewModel(index: index, BreedDetailModel(breed))
+        BreedImageUrlFetcher.shared.delegates.append(vm)
+        return vm
+    }
+    
+    func reloadImageUrl(for index: Int) {
+        if var breed = getBreedModel(at: index) {
+            breed.breedImageFetchingStatus = .notStarted
+            breeds[index] = breed
+            delegate?.reloadTableView(at: index)
+        }
     }
 }
+//MARK: - API Calling
 
 extension BreedsViewModel {
-    func getBreeds() {
-            APIManager.shared.makeAPICall(call: .getBreeds) {[weak self] (result: Result<[Breed]>) in
+    func fetchBreeds() {
+            APIManager.shared.makeAPICall(call: .getBreeds) {[weak self] (result: Result<[DecodingFailableObject<Breed>], NetworkError>) in
                 switch result {
-                case .success(let breeds):
-                    self?.breeds = breeds
-                    print(breeds)
+                case .success(let decodingFailableBreeds):
+                    
+                    self?.breeds = decodingFailableBreeds.compactMap { optionalBreed in
+                        switch optionalBreed.value {
+                        case .success(let breed):
+                            return breed
+                        case .failure(_):   // TODO: Can catch decoding error
+                            return nil
+                        }
+                    }
                     self?.delegate?.reloadTableView()
                 case .failure(let error):
-                    self?.delegate?.showError(message: error.localizedDescription)
+                    self?.delegate?.showError(message: error.getErrorString)
                 }
             }
     }
     
-    func getImageUrl(index: Int) {
-        guard let breed = getBreedModel(at: index), let referenceImageId = breed.referenceImageId else {return}
-    
+    func fetchImageUrl(index: Int) {
+        guard let breed = getBreedModel(at: index) else {return}
+        let referenceImageId = breed.referenceImageId
         breeds[index].breedImageFetchingStatus = .fetching
         BreedImageUrlFetcher.shared.getImageUrl(index: index, referenceImageId: referenceImageId)
     }
 }
+//MARK: - BreedImageUrlFetcherDelegate
 
 extension BreedsViewModel: BreedImageUrlFetcherDelegate {
-    
     func success(index: Int, _ breedImage: BreedImage) {
-        breeds[index].breedImageFetchingStatus = .fetched(breedImage)
-        delegate?.reloadTableView(at: index)
+        if var breed = getBreedModel(at: index) {
+            breed.breedImageFetchingStatus = .fetched(breedImage)
+            breeds[index] = breed
+            delegate?.reloadTableView(at: index)
+        }
     }
     
     func failure(index: Int, _ error: Error) {
-        
+        if var breed = getBreedModel(at: index) {
+            breed.breedImageFetchingStatus = .failed
+            breeds[index] = breed
+            delegate?.reloadTableView(at: index)
+        }
     }
-    
 }

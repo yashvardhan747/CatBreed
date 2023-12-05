@@ -7,28 +7,19 @@
 
 
 struct BreedImage: Fetchable, Codable {
-    let referenceImageId: String?
-    let urlString: String?
+    let referenceImageId: String
+    let urlString: String
     
     enum CodingKeys: String, CodingKey {
         case referenceImageId = "id"
         case urlString = "url"
     }
-    
-    init(from decoder: Decoder) throws {
-        guard let breedImage = try? decoder.container(keyedBy: CodingKeys.self) else {
-            throw NetworkingError.invalidResponse
-        }
-        
-        referenceImageId = try? breedImage.decode(String.self, forKey: .referenceImageId)
-        urlString = try? breedImage.decode(String.self, forKey: .urlString)
-    }
 }
 
-struct Breed: Codable {
+struct Breed: Decodable {
     let id: String
     let name: String
-    let referenceImageId: String?
+    let referenceImageId: String
     let description: String?
     let lifeSpan: String?
     let indoor: Int?
@@ -56,13 +47,11 @@ struct Breed: Codable {
     }
     
     init(from decoder: Decoder) throws {
-        guard let breed = try? decoder.container(keyedBy: CodingKeys.self) else {
-            throw NetworkingError.invalidResponse
-        }
+        let breed = try decoder.container(keyedBy: CodingKeys.self)
+        id = try breed.decode(String.self, forKey: .id)
+        name = try breed.decode(String.self, forKey: .name)
+        referenceImageId = try breed.decode(String.self, forKey: .referenceImageId)
         
-        id = (try? breed.decode(String.self, forKey: .id)) ?? "--"
-        name = (try? breed.decode(String.self, forKey: .name)) ?? "--"
-        referenceImageId = try? breed.decode(String.self, forKey: .referenceImageId)
         description = try? breed.decode(String.self, forKey: .description)
         lifeSpan = try? breed.decode(String.self, forKey: .lifeSpan)
         indoor = try? breed.decode(Int.self, forKey: .indoor)
@@ -73,10 +62,6 @@ struct Breed: Codable {
         energyLevel = try? breed.decode(Int.self, forKey: .energyLevel)
         intelligence = try? breed.decode(Int.self, forKey: .intelligence)
         
-        if let _ = referenceImageId {
-            breedImageFetchingStatus = .notStarted
-        }else {
-            breedImageFetchingStatus = .failed
-        }
+        breedImageFetchingStatus = .notStarted
     }
 }

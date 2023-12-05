@@ -6,7 +6,7 @@
 //
 
 struct ImageUrlFetchable: Fetchable {
-    var urlString: String?
+    var urlString: String
 }
 
 struct ImageTitleSubTitleTableViewCellModel {

@@ -2,7 +2,7 @@
 //  BreedMetaData.swift
 //  CatBreeds
 //
-//  Created by Astrotalk on 01/12/23.
+//  Created by Yash on 01/12/23.
 //
 
 struct BreedMetaData {

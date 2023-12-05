@@ -11,7 +11,7 @@ protocol ImageTitleSubTitleTableViewCellDelegate: AnyObject {
     func reloadImageView(for index: Int)
 }
 
-class ImageTitleSubTitleTableViewCell: UITableViewCell {
+final class ImageTitleSubTitleTableViewCell: UITableViewCell {
     @IBOutlet weak var cellImageView: UIImageView!
     @IBOutlet weak var cellTitleLabel: UILabel!
     @IBOutlet weak var cellSubTitleLabel: UILabel!
@@ -31,9 +31,21 @@ class ImageTitleSubTitleTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    private func hideSpinner() {
+        self.activityIndicator.stopAnimating()
+        self.activityIndicator.isHidden = true
+    }
+    
+    private func showSpinner() {
+        self.activityIndicator.startAnimating()
+        self.activityIndicator.isHidden = false
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         cellImageView.image = nil
+        self.reloadImageViewButton.isHidden = true
+        showSpinner()
     }
     
     func configure(with viewModel: ImageTitleSubTitleTableViewCellViewModel) {
@@ -50,24 +62,21 @@ class ImageTitleSubTitleTableViewCell: UITableViewCell {
         switch viewModel.imageFetchingStatus {
         case .failed:
             self.reloadImageViewButton.isHidden = false
-            self.activityIndicator.isHidden = true
+            hideSpinner()
         case.fetched(let fetchable):
             cellImageView.setAndSaveImage(imageUrlString: fetchable.urlString, imageName: viewModel.getTitle) {bool in
                 switch bool {
                 case true:
                     self.reloadImageViewButton.isHidden = true
-                    self.activityIndicator.isHidden = true
+                    self.hideSpinner()
                 case false:
                     self.reloadImageViewButton.isHidden = false
-                    self.activityIndicator.isHidden = true
+                    self.hideSpinner()
                 }
             }
-        case .fetching:
+        case .fetching, .notStarted:
             self.reloadImageViewButton.isHidden = true
-            self.activityIndicator.isHidden = false
-        case .notStarted:
-            self.reloadImageViewButton.isHidden = true
-            self.activityIndicator.isHidden = false
+            self.showSpinner()
         }
     }
     

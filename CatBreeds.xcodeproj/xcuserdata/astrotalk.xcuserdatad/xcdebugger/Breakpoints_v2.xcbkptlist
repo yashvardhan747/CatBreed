@@ -101,7 +101,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "16ADB908-DFAB-46E1-8F13-108A219D778D"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CatBreeds/BreedDetail/ViewController/BreedDetailViewController.swift"
@@ -172,6 +172,36 @@
                   endingLineNumber = "64"
                   offsetFromSymbolStart = "64">
                </Location>
+               <Location
+                  uuid = "16ADB908-DFAB-46E1-8F13-108A219D778D - e21a810d1a9ff9bf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CatBreeds.BreedDetailViewController.__deallocating_deinit"
+                  moduleName = "CatBreeds"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/astrotalk/Documents/CatBreeds/CatBreeds/BreedDetail/ViewController/BreedDetailViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  uuid = "16ADB908-DFAB-46E1-8F13-108A219D778D - 69973e6e01c1417e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (CatBreeds.BreedImageUrlFetcherDelegate) -&gt; Swift.Bool in CatBreeds.BreedDetailViewController.deinit"
+                  moduleName = "CatBreeds"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/astrotalk/Documents/CatBreeds/CatBreeds/BreedDetail/ViewController/BreedDetailViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "64">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -185,9 +215,281 @@
             filePath = "CatBreeds/Breeds/ViewController/BreedsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "reloadImageView(for:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C2276334-4B82-436F-B4F9-0D3A14DF5FBE - 21d57fdbc7e25a24"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CatBreeds.BreedsViewController.reloadImageView(for: Swift.Int) -&gt; ()"
+                  moduleName = "CatBreeds"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/astrotalk/Documents/CatBreeds/CatBreeds/Breeds/ViewController/BreedsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101"
+                  offsetFromSymbolStart = "64">
+               </Location>
+               <Location
+                  uuid = "C2276334-4B82-436F-B4F9-0D3A14DF5FBE - 21d57fdbc7e25a4b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CatBreeds.BreedsViewController.reloadImageView(for: Swift.Int) -&gt; ()"
+                  moduleName = "CatBreeds"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/astrotalk/Documents/CatBreeds/CatBreeds/Breeds/ViewController/BreedsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D6577696-7949-4228-9995-135E9DB39221"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CatBreeds/BreedDetail/ViewModel/BreedDetailViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "fetchImageUrl()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C6B931BD-6ECD-4448-9F17-0F91780D1086"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CatBreeds/BreedDetail/ViewModel/BreedDetailViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "success(index:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0E112648-F676-4F7B-A88D-B533038116D0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CatBreeds/BreedDetail/ViewModel/BreedDetailViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "failure(index:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4574B44C-F40C-4518-B31E-7AB471F2C9CE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CatBreeds/TableViewCells/Image+Title+SubTitle/View/ImageTitleSubTitleTableViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "loadImageView()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1D05E7B0-EF49-4DF8-B23F-67E9E71907C0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CatBreeds/Breeds/ViewModel/BreedsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "getCellViewModel(at:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1D05E7B0-EF49-4DF8-B23F-67E9E71907C0 - d3619eb082213d83"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CatBreeds.BreedsViewModel.getCellViewModel(at: Swift.Int) -&gt; Swift.Optional&lt;CatBreeds.ImageTitleSubTitleTableViewCellViewModel&gt;"
+                  moduleName = "CatBreeds"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/astrotalk/Documents/CatBreeds/CatBreeds/Breeds/ViewModel/BreedsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "64">
+               </Location>
+               <Location
+                  uuid = "1D05E7B0-EF49-4DF8-B23F-67E9E71907C0 - d3619eb082213d83"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CatBreeds.BreedsViewModel.getCellViewModel(at: Swift.Int) -&gt; Swift.Optional&lt;CatBreeds.ImageTitleSubTitleTableViewCellViewModel&gt;"
+                  moduleName = "CatBreeds"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/astrotalk/Documents/CatBreeds/CatBreeds/Breeds/ViewModel/BreedsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "120">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F2E407F3-77B1-43EE-9948-D8D0AA87B3D3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CatBreeds/Breeds/ViewModel/BreedsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "fetchImageUrl(index:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F2E407F3-77B1-43EE-9948-D8D0AA87B3D3 - 65d35538f0aa4a0f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CatBreeds.BreedsViewModel.fetchImageUrl(index: Swift.Int) -&gt; ()"
+                  moduleName = "CatBreeds"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/astrotalk/Documents/CatBreeds/CatBreeds/Breeds/ViewModel/BreedsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "91"
+                  endingLineNumber = "91"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "F2E407F3-77B1-43EE-9948-D8D0AA87B3D3 - 65d35538f0aa4a6e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CatBreeds.BreedsViewModel.fetchImageUrl(index: Swift.Int) -&gt; ()"
+                  moduleName = "CatBreeds"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/astrotalk/Documents/CatBreeds/CatBreeds/Breeds/ViewModel/BreedsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "90"
+                  endingLineNumber = "90"
+                  offsetFromSymbolStart = "108">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "510C679C-4792-45B1-94E0-CF6A481F5232"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CatBreeds/Breeds/ViewController/BreedsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "reloadTableView(at:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "34E06AE2-90A4-4869-B6DC-CB4F75508B26"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CatBreeds/Breeds/ViewModel/BreedsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "reloadImageUrl(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7E75493E-7B4A-439B-BA24-4E44893FC891"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CatBreeds/Breeds/ViewController/BreedsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DE2FA1E4-ECAE-4527-90C1-70CA9A6AE96B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CatBreeds/Breeds/ViewModel/BreedsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "success(index:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B17701E-2844-46F5-B380-1D0F7F1C9889"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CatBreeds/Breeds/ViewModel/BreedsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
+            landmarkName = "failure(index:_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -88,36 +88,29 @@ final class APIManager {
     static let shared = APIManager()
     private init(){}
     
-    func makeAPICall<T: Decodable>(call: APICall, onCompletion: @escaping (Result<T>) -> Void){
+    func makeAPICall<T: Decodable>(call: APICall, completion: @escaping (Result<T, NetworkError>) -> Void){
         guard let request = call.asURLRequest() else {
-            onCompletion(.failure(.invalidRequest))
+            completion(.failure(.invalidRequest))
             return
         }
         
-        let session = URLSession.shared.dataTask(with: request) { data, response, error in
+        let session = URLSession.shared.dataTask(with: request) { result in
             DispatchQueue.main.async {
-                guard let data = data else {
-                    onCompletion(.failure(.invalidData))
-                    return
+                switch result {
+                case .failure(let error):
+                    completion(.failure(error))
+                case .success(let data):
+                    do {
+                        let decodedData = try JSONDecoder().decode(T.self, from: data)
+                        completion(.success(decodedData))
+                    }catch {
+                        completion(.failure(.decodingError(error)))
+                    }
                 }
-                
-                guard let httpUrlResponse = response as? HTTPURLResponse, 200 ... 299  ~= httpUrlResponse.statusCode else {
-                    onCompletion(.failure(.invalidResponse))
-                    return
-                }
-                
-                do {
-                    let data = try JSONDecoder().decode(T.self, from: data)
-                    onCompletion(.success(data))
-                }catch {
-                    onCompletion(.failure(.decodingError))
-                }
-                
             }
+            
         }
         
         session.resume()
-        
     }
 }
-

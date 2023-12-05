@@ -16,7 +16,7 @@ class BreedsViewController: UIViewController{
         super.viewDidLoad()
         viewModel.delegate = self
         setupUI()
-        viewModel.getBreeds()
+        viewModel.fetchBreeds()
     }
     
     private func setupUI() {
@@ -32,7 +32,7 @@ class BreedsViewController: UIViewController{
     }
     
     private func reloadTableViewData() {
-        viewModel.getBreeds()
+        viewModel.fetchBreeds()
     }
     
     deinit {
@@ -83,15 +83,21 @@ extension BreedsViewController: BreedsViewModelDelegate {
     
     func showError(message: String) {
         let alertVC = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
+        let alertAction = UIAlertAction(title: "ok", style: .cancel) { _ in
+            self.tableView.refreshControl?.endRefreshing()
+            UIView.animate(withDuration: 0.5, animations: {
+                self.tableView.contentOffset = CGPoint.zero
+            })
+        }
         alertVC.addAction(alertAction)
         self.present(alertVC, animated: false)
+        self.tableView.refreshControl?.endRefreshing()
     }
 }
 
 extension BreedsViewController: ImageTitleSubTitleTableViewCellDelegate {
     func reloadImageView(for index: Int) {
-        viewModel.getImageUrl(index: index)
+        viewModel.reloadImageUrl(for: index)
     }
 }
 

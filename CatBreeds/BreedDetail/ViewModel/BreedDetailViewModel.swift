@@ -38,7 +38,7 @@ final class BreedDetailViewModel {
     }
     
     func fetchImageUrl() {
-        guard let refId = breedDetailModel.breed.referenceImageId else {return}
+        let refId = breedDetailModel.breed.referenceImageId
         BreedImageUrlFetcher.shared.getImageUrl(index: index, referenceImageId: refId)
     }
     
@@ -54,7 +54,8 @@ extension BreedDetailViewModel: BreedImageUrlFetcherDelegate {
     }
     
     func failure(index: Int, _ error: Error) {
-        
+        breedDetailModel.breed.breedImageFetchingStatus = .failed
+        delegate?.reloadImageView()
     }
     
 }
